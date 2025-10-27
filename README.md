@@ -74,11 +74,10 @@ graph TD
         K -- Success/Failure --> L["Alerting: Cloud Monitoring / Slack"];
     end
 
-    %% Define Task Dependencies
     [B, C, D] --> F;
     F --> H;
     I --> K;
-    
+
 ```
 
 
