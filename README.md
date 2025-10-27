@@ -73,7 +73,6 @@ graph TD
         J -- Run Checkpoint --> K[Great Expectations];
         K -- Success/Failure --> L["Alerting: Cloud Monitoring / Slack"];
     end
-
     [B, C, D] --> F;
     F --> H;
     I --> K;
