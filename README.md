@@ -65,19 +65,17 @@ graph TD
 
     subgraph "Data Warehouse (BigQuery)"
         G -- External Table --> H[dbt: Staging Models];
-        H --> I[dbt: Mart Models (Fact/Dim)];
+        H --> I["dbt: Mart Models (Fact/Dim)"];
         I -- Partitioned Tables --> J[BigQuery Analytics Dataset];
     end
 
     subgraph "Validation & Alerting"
         J -- Run Checkpoint --> K[Great Expectations];
-        K -- Success/Failure --> L[Alerting: Cloud Monitoring / Slack];
+        K -- Success/Failure --> L["Alerting: Cloud Monitoring / Slack"];
     end
 
     %% Define Task Dependencies
-    B --> F;
-    C --> F;
-    D --> F;
+    [B, C, D] --> F;
     F --> H;
     I --> K;
 ```
