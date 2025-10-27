@@ -1,0 +1,51 @@
+{
+  "expectation_suite_name": "fct_daily_listens_suite",
+  "ge_cloud_id": null,
+  "expectations": [
+    {
+      "expectation_type": "expect_table_row_count_to_be_between",
+      "kwargs": {
+        "min_value": 1000000,
+        "max_value": 5000000
+      },
+      "meta": {
+        "notes": "Checking for 1.2M daily records, with wide tolerance."
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "listen_id"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_unique",
+      "kwargs": {
+        "column": "listen_id"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "played_at_ts"
+      },
+      "meta": {}
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_set",
+      "kwargs": {
+        "column": "played_at_day",
+        "value_set": ["{{ run_date }}"]
+      },
+      "meta": {
+        "notes": "This expects a 'run_date' variable to be passed in at runtime."
+      }
+    }
+  ],
+  "data_asset_type": "Table",
+  "meta": {
+    "great_expectations_version": "0.15.50"
+  }
+}

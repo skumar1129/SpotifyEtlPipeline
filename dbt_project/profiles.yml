@@ -1,0 +1,17 @@
+# This file should be in your ~/.dbt/ directory in a productionized pipeline, not in the project repo
+
+spotify_etl:
+  target: prod
+  outputs:
+    prod:
+      type: bigquery
+      method: service-account # Use service account for prod
+      project: "{{ env_var('GCP_PROJECT_ID') }}"
+      dataset: spotify_data # This is the "default" dataset
+      threads: 4
+      keyfile: "{{ env_var('DBT_SA_KEYFILE_PATH') }}" # Path to the SA keyfile
+      # For Composer, use 'oauth' and the Composer SA's identity
+      # method: oauth
+      # project: "your-gcp-project-id"
+      # dataset: "spotify_data"
+      # threads: 4

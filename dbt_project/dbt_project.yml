@@ -1,0 +1,47 @@
+# This file configures the dbt project
+
+name: 'spotify_etl'
+version: '1.0.0'
+config-version: 2
+
+# This is the "default" profile. You can override this with --profile
+profile: 'spotify_etl'
+
+# These are paths to directories in your project
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"  # directory which will contain compiled SQL
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+models:
+  spotify_etl:
+    # Config for all models in the 'staging' subdirectory
+    staging:
+      +materialized: view # Staging models are views
+      +schema: staging
+    # Config for all models in the 'marts' subdirectory
+    marts:
+      +materialized: table # Mart models are tables
+      +schema: marts
+      # Specific config for 'fct_daily_listens'
+      fct_daily_listens:
+        +materialized: incremental # Use incremental loading
+        +time_partitioning:
+          field: "played_at_day"
+          type: "day"
+        +clustering: ["user_id", "artist_id"]
+        +incremental_strategy: "insert_overwrite"
+        +partition_by: {
+            "field": "played_at_day",
+            "data_type": "date"
+        }
