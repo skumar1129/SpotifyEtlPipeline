@@ -75,7 +75,7 @@ graph TD
     end
 
     %% Define Task Dependencies
-    [B, C, D] --> F;
+    B & C & D --> F;
     F --> H;
     I --> K;
 ```
